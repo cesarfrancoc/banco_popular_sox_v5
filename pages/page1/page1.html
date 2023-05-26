@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title></title>
+<link rel="stylesheet" href="../../index.css">
+<link rel="stylesheet" href="../../cjs/jquery.mCustomScrollbar.css" />
+<link href="../../fonts/font-awesome/css/all.css" rel="stylesheet">
+<script src="../../cjs/easeljs-0.8.2.min.js"></script> 
+<script src="../../cjs/tweenjs-0.6.2.min.js"></script> 
+<script src="../../cjs/preloadjs-0.6.2.min.js"></script> 
+<script src="../../cjs/soundjs-0.6.2.min.js"></script> 
+<script src="page.js"></script> 
+<script src="../../principal.js"></script> 
+<script src="../../cjs/jquery.min.js"></script> 
+<script src="../../cjs/jquery.imagemapster.js"></script> 
+<script src="../../cjs/jquery.mCustomScrollbar.concat.min.js"></script> 
+<script src="../../cjs/jquery-ui.min.js"></script> 
+<script src="../../cjs/jquery.ui.touch-punch.min.js"></script> 
+<script>
+var canvas, stage, exportRoot;
+function init() {
+	canvas = document.getElementById("canvas");
+	var loader = new createjs.LoadQueue(false);
+	loader.installPlugin(createjs.Sound);
+	loader.addEventListener("fileload", handleFileLoad);
+	loader.addEventListener("complete", handleComplete);
+	loader.addEventListener("progress", handleProgress);
+	loader.loadManifest(lib.properties.manifest);
+  $.getJSON("../../images/animaciones_atlas_.json", function(json) {
+      frames_animacion = json.frames;
+    });
+}
+function handleFileLoad(evt) {
+	if (evt.item.type == "image") { images[evt.item.id] = evt.result; }
+}
+function playSound(id, loop) {
+	createjs.Sound.play(id, createjs.Sound.INTERRUPT_EARLY, 0, 0, loop);
+}
+ancho_linea = 0;
+alto_linea = 10;
+max_ancho = 450;
+function handleProgress(evt) {
+	stage = new createjs.Stage(canvas);
+	var bordePadding = 2;
+    var borde = new createjs.Shape;
+    borde.graphics.beginFill("rgba(131,120,111,0.4)").drawRect(0, 0, max_ancho + bordePadding*2, alto_linea).endFill();
+    var linea_carga = new createjs.Shape();
+	linea_carga.graphics.beginFill("#009DDF").drawRect(0 + bordePadding,0 + bordePadding, ancho_linea, alto_linea - bordePadding*2).endFill();
+    progreso = Math.round(evt.loaded * max_ancho);
+	ancho_linea = progreso;
+	contenedor = new createjs.Container();
+	contenedor.x = 1240/2 - max_ancho/2;
+	contenedor.y = 495*4/5 - alto_linea/2;
+	contenedor.addChild(borde, linea_carga);
+	//stage.addChild(contenedor);
+	stage.update();
+}
+function handleComplete(evt) {
+	var queue = evt.target;
+	stage = new createjs.Stage(canvas);
+	createjs.Ticker.addEventListener("tick", stage);
+	/////Variables
+	sin_personaje = true;
+	globo_personaje = "Empecemos identificando la importancia del programa de bloqueo y etiquetado, las actividades en las que se debe aplicar y algunos conceptos asociados.";
+	pausas_audio = [[0,16406],[977,19347]];
+
+  coord_flecha_next = [900,100];
+
+  contenidos();	
+}
+</script>
+</head>
+<body onload="init();">
+<canvas id="canvas" width="1260" height="550"></canvas>
+<div id="instruccion_circulos" class="instruccion_circulos"> </div>
+<div class="c_principal c_1_1">
+  <h1  data-posabsbtn="400,220">¿Qué es SOX?</h1>
+  <div class="item_c">
+    <div class="txt_c">
+      <div class="cont_audio">
+        <div class="audio_c">
+          <audio controls style="margin-top: 15px;">
+            <source src="sounds/diap4a.mp3" type="audio/mpeg">
+            Your browser does not support the audio tag. </audio>
+        </div>
+        <div class="subs_audio">
+          <div>Es una ley emitida en Estados Unidos aplicable a las empresas que cotizan sus acciones en el mercado de valores de ese país. Esta Ley busca que las empresas mejoren la <span class="negrilla">calidad y transparencia de sus informes financieros</span>, con el fin de proteger a los inversionistas. </div>
+        </div>
+      </div>
+      <div class="instruccion_interna">Pasa el mouse sobre el dato de interés</div>
+      <div id="zona_sensible0" class="negrilla_sensible">
+        <p><i class="fad fa-comment-exclamation"></i></p>
+        <p>Dato de interés</p>
+      </div>
+    </div>
+  </div>
+  <div class="item_c"> <img src="images/diap4.png" height="300"> </div>
+</div>
+<div class="c_principal c_2_6">
+  <h1  data-posabsbtn="200,220"> Las Tres Líneas</h1>
+  <div class="item_c">
+    <h1></h1>
+  </div>
+  <div class="item_c" style="margin: 0 30px;">
+    <div class="txt_interno c_1">
+      <h1>Inicio</h1>
+      <div class="item_c">
+        <div class="txt_c">
+          <div class="cont_audio">
+            <div class="audio_c">
+              <audio controls style="margin-top: 15px;">
+                <source src="sounds/diap6.mp3" type="audio/mpeg">
+                Your browser does not support the audio tag. </audio>
+            </div>
+            <div class="subs_audio">
+              <div>Grupo Aval y sus filiales hemos estructurado las funciones y responsabilidades frente a la gestión de riesgos, siguiendo la metodología de las tres líneas, esto es, considerando:</div>
+              <div><span class="negrilla">1. La gestión por cada línea de negocio.</span></div>
+              <div><span class="negrilla">2. Una función de gestión del riesgo independiente.</span></div>
+              <div><span class="negrilla">3. Una revisión independiente.</span></div>
+            </div>
+          </div>
+        </div>
+        <div class='instruccion_interna'><span class='indica_instclic'></span>Pulsa los botones para conocer a profundidad cada una de estas líneas.</div>
+      </div>
+    </div>
+    <div class="txt_interno c_1">
+      <h1>Primera Línea</h1>
+      <div class="item_c">
+        <div class="txt_c">
+          <div class="cont_audio">
+            <div class="audio_c">
+              <audio controls style="margin-top: 15px;">
+                <source src="sounds/diap7a.mp3" type="audio/mpeg">
+                Your browser does not support the audio tag. </audio>
+            </div>
+            <div class="subs_audio">
+              <div>Los actores clave de la Primera Línea son los <span class="negrilla">Dueños de Proceso</span>, quienes tienen las siguientes responsabilidades:</div>
+            </div>
+          </div>
+        </div>
+        <div class="infografia"> <img src="images/diap7.png" height="250">
+          <map data-restriccion="no">
+            <area id="zona_sensible1" shape="circ" coords="99,112,68">
+            <area id="zona_sensible2" shape="circ" coords="276,112,68">
+            <area id="zona_sensible3" shape="circ" coords="449,112,68">
+            <area id="zona_sensible4" shape="circ" coords="99,279,68">
+            <area id="zona_sensible5" shape="circ" coords="276,279,68">
+            <area id="zona_sensible6" shape="circ" coords="449,279,68">
+          </map>
+        </div>
+      </div>
+    </div>
+    <div class="txt_interno c_1">
+      <h1>Segunda Línea</h1>
+      <div class="item_c">
+        <div class="txt_c">
+          <div class="cont_audio">
+            <div class="audio_c">
+              <audio controls style="margin-top: 15px;">
+                <source src="sounds/diap8a.mp3" type="audio/mpeg">
+                Your browser does not support the audio tag. </audio>
+            </div>
+            <div class="subs_audio">
+              <div>Los actores clave de la Segunda Línea son los <span class="negrilla">Equipos SOX</span>, los cuales deben:</div>
+            </div>
+          </div>
+        </div>
+        <div class="infografia"> <img src="images/diap8.png" height="250">
+          <map data-restriccion="no">
+            <area id="zona_sensible7" shape="circ" coords="545,115,70">
+            <area id="zona_sensible8" shape="circ" coords="723,115,70">
+            <area id="zona_sensible9" shape="circ" coords="898,115,70">
+            <area id="zona_sensible10" shape="circ" coords="637,271,70">
+            <area id="zona_sensible11" shape="circ" coords="803,271,70">
+          </map>
+        </div>
+      </div>
+    </div>
+    <div class="txt_interno c_1">
+      <h1>Tercera Línea</h1>
+      <div class="item_c">
+        <div class="txt_c">
+          <div class="cont_audio">
+            <div class="audio_c">
+              <audio controls style="margin-top: 15px;">
+                <source src="sounds/diap9a.mp3" type="audio/mpeg">
+                Your browser does not support the audio tag. </audio>
+            </div>
+            <div class="subs_audio">
+              <div>El actor clave de la Tercera Línea es la <span class="negrilla">Contraloría Interna</span>, que tiene las siguientes responsabilidades:</div>
+            </div>
+          </div>
+        </div>
+        <div class="infografia"> <img src="images/diap9.png" height="250">
+          <map data-restriccion="no">
+            <area id="zona_sensible12" shape="circ" coords="114,111,70">
+            <area id="zona_sensible13" shape="circ" coords="409,111,70">
+            <area id="zona_sensible14" shape="circ" coords="73,338,70">
+            <area id="zona_sensible15" shape="circ" coords="453,338,70">
+          </map>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="c_principal c_1_1">
+  <h1  data-posabsbtn="400,220"> Evaluación del Sistema de Control Interno sobre el Reporte Financiero</h1>
+  <div class="item_c">
+    <div class="txt_c">
+      <div class="cont_audio">
+        <div class="audio_c">
+          <audio controls style="margin-top: 15px;">
+            <source src="sounds/diap11a.mp3" type="audio/mpeg">
+            Your browser does not support the audio tag. </audio>
+        </div>
+        <div class="subs_audio">
+          <div>No basta con que el Banco haya diseñado adecuadamente los controles SOX, sino que debe validar que el <span class="negrilla">Sistema de Controles Interno</span> es efectivo mediante las <span class="negrilla">Pruebas de Diseño y Efectividad de la Contraloría</span>, para ello debe asegurar que la implementación y la ejecución de los controles se realice tal y como se diseñaron, <span class="negrilla">de forma permanente, según la frecuencia del control y a lo largo de todo el año</span>.</div>
+        </div>
+      </div>
+      <div class="instruccion_interna">Pasa el mouse sobre el dato de interés</div>
+      <div id="zona_sensible16" class="negrilla_sensible">
+        <p><i class="fad fa-comment-exclamation"></i></p>
+        <p>Dato de interés</p>
+      </div>
+    </div>
+  </div>
+  <div class="item_c"> <img src="images/diap11.png" height="300"> </div>
+</div>
+<div class="mas_personaje c_1">
+  <h1></h1>
+  <div class="item_c"></div>
+</div>
+<div class="c_principal c_2_6">
+  <h1  data-posabsbtn="200,220"> Deficiencias</h1>
+  <div class="item_c">
+    <h1></h1>
+  </div>
+  <div class="item_c" style="margin: 0 30px;">
+    <div class="txt_interno c_1">
+      <h1>Inicio</h1>
+      <div class="item_c">
+        <div class="txt_c">
+          <div class="cont_audio">
+            <div class="audio_c">
+              <audio controls style="margin-top: 15px;">
+                <source src="sounds/diap13.mp3" type="audio/mpeg">
+                Your browser does not support the audio tag. </audio>
+            </div>
+            <div class="subs_audio">
+              <div>Si dentro de las revisiones independientes adelantadas por los auditores (internos o externos) se identifican controles cuyo diseño es <span class="negrilla">inadecuado</span> o cuya operatividad es <span class="negrilla">inefectiva</span>, se determinará la existencia de una deficiencia, la cual puede ser de dos tipos.</div>
+            </div>
+          </div>
+        </div>
+        <div class='instruccion_interna'><span class='indica_instclic'></span>Pulsa los botones para conocer cada uno de ellos.</div>
+      </div>
+    </div>
+    <div class="txt_interno c_1_1">
+      <h1>Diseño</h1>
+      <div class="item_c">
+        <div class="txt_c">
+          <div class="cont_audio">
+            <div class="audio_c">
+              <audio controls style="margin-top: 15px;">
+                <source src="sounds/diap14.mp3" type="audio/mpeg">
+                Your browser does not support the audio tag. </audio>
+            </div>
+            <div class="subs_audio">
+              <div> Son errores o diferencias entre la forma en que se realiza el control y la forma en que está escrito, o errores en la descripción del control porque no cumple con los componentes y/o características mínimas de un diseño adecuado. </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="item_c"> <img src="images/diap14.png" height="300"> </div>
+    </div>
+    <div class="txt_interno c_4_5">
+      <h1>Operatividad o efectividad</h1>
+      <div class="item_c">
+        <div class="txt_c" style="width: 200px;">
+          <div class="cont_audio">
+            <div class="audio_c">
+              <audio controls style="margin-top: 15px;">
+                <source src="sounds/diap15a.mp3" type="audio/mpeg">
+                Your browser does not support the audio tag. </audio>
+            </div>
+            <div class="subs_audio">
+              <div> Son errores en la ejecución del control tales como:</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="item_c">
+        <div class="infografia"> <img src="images/diap15.png" height="220">
+          <map data-restriccion="no">
+            <area id="zona_sensible17" shape="circ" coords="82,110,70">
+            <area id="zona_sensible18" shape="circ" coords="455,110,70">
+            <area id="zona_sensible19" shape="circ" coords="74,336,70">
+            <area id="zona_sensible20" shape="circ" coords="460,336,70">
+          </map>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="c_masinfo c_1_1">
+  <h1>Criticidad de las deficiencias </h1>
+  <div class="item_c"> <img src="images/diap16.png" height="300"> </div>
+  <div class="item_c">
+    <div class="instruccion_interna">Pasa el mouse sobre los textos resaltados</div>
+    <div class="txt_c">
+      <div class="cont_audio">
+        <div class="audio_c">
+          <audio controls style="margin-top: 15px;">
+            <source src="sounds/diap16a.mp3" type="audio/mpeg">
+            Your browser does not support the audio tag. </audio>
+        </div>
+        <div class="subs_audio">
+          <div>De acuerdo con su criticidad, las deficiencias SOX se clasifican así: </div>
+        </div>
+      </div>
+      <div class="negrilla_sensible" id="zona_sensible21">Deficiencia de Control</div>
+      <div class="negrilla_sensible" id="zona_sensible22">Deficiencia Significativa</div>
+      <div class="negrilla_sensible" id="zona_sensible23">Debilidad Material</div>
+    </div>
+  </div>
+</div>
+<div class="c_principal c_5_12">
+  <h1  data-posabsbtn="400,220">Tablero de control</h1>
+  <div class="item_c">
+    <div class="txt_c">
+      <div class="cont_audio" style="width: 200px;">
+        <div class="audio_c">
+          <audio controls style="margin-top: 15px;">
+            <source src="sounds/diap18a.mp3" type="audio/mpeg">
+            Your browser does not support the audio tag. </audio>
+        </div>
+        <div class="subs_audio">
+          <div>Como parte de la Gestión Integral de Riesgo a nivel consolidado, se ha definido el Tablero de control como mecanismo de <span class="negrilla">monitoreo de riesgos</span>, a efectos de presentar de manera oportuna y ejecutiva los resultados de la gestión de riesgos en cada fase (semestralmente) a través de los <span class="negrilla">tres indicadores</span> que se muestran en la siguiente tabla. </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="item_c" style="margin-top: -50px;">
+    <div class="txt_c">
+      <style>
+		 
+		  
+		 .th_decora, .td_decora   {		  
+    background-color: #A7A7A7;
+    color: black;
+			 border: none;
+		  }
+		  .uno > .th_decora, .uno > .td_decora   {		  
+    background-color: #00BBFF;
+    color: black; border: none;
+		  }
+		  .dos > .th_decora, .dos > .td_decora   {		  
+    background-color: #00FF54;
+    color: black; border: none;
+		  }
+		  .tres > .th_decora, .tres > .td_decora   {		  
+    background-color: #FFF500;
+    color: black; border: none;
+		  }
+		  .cuatro > .th_decora, .cuatro > .td_decora   {		  
+    background-color: red;
+    color: black; border: none;
+		  }
+	  
+	  </style>
+      <div class="cont_audio">
+        <div class="audio_c">
+          <audio controls style="margin-top: 15px;">
+            <source src="sounds/diap18b.mp3" type="audio/mpeg">
+            Your browser does not support the audio tag. </audio>
+        </div>
+        <div class="subs_audio"></div>
+      </div>
+      <table class="tabla_estilo" style="text-align: center; margin: auto;">
+        <tr>
+          <th rowspan="2"> INDICADOR(ES) NIVEL 1 </th>
+          <th colspan="4"> LÍMITES </th>
+        </tr>
+        <tr>
+          <th style="width: 130px;" class="uno">Apetito</th>
+          <th style="width: 150px;" class="dos">Límite de apetito</th>
+          <th style="width: 160px;" class="tres">Tolerancia</th>
+          <th class="cuatro">Capacidad</th>
+        </tr>
+        <tr>
+          <td> Cantidad de Deficiencias de Control </td>
+          <td class="uno"> 0.0 % - 3,5 % </td>
+          <td class="dos">>=3,6 % - 5,0 % </td>
+          <td class="tres">>=5,1 % - 6,5 % </td>
+          <td class="cuatro">>6,5 % </td>
+        </tr>
+        <tr>
+          <td> Impacto cuantitativo de los hallazgos </td>
+          <td class="uno"> 0,1 % - 0,5 % </td>
+          <td class="dos">>=0,6 % - 1,0 % </td>
+          <td class="tres">>=1,1 % - 4,3 % </td>
+          <td class="cuatro">>=4,4 % </td>
+        </tr>
+        <tr>
+          <td> Criticidad de los hallazgos </td>
+          <td class="uno"> 0,0 % - 10,0 % </td>
+          <td class="dos">>=10,1 % - 20,0 % </td>
+          <td class="tres">>=20,1 % - 30,0 % </td>
+          <td class="cuatro">>=30,0 % </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
+<div class="c_principal c_1-1">
+  <h1  data-posabsbtn="700,220">Actividad</h1>
+  <div class="item_c">
+    <div class="txt_c">
+      <table style="text-align: center; margin: auto; width: 800px;">
+        <td><div class="cont_audio">
+              <div class="audio_c">
+                <audio controls style="margin-top: 15px;">
+                  <source src="sounds/diap20.mp3" type="audio/mpeg">
+                  Your browser does not support the audio tag. </audio>
+              </div>
+              <div class="subs_audio">Llegó el momento de recuperar el manuscrito. ¡Para ello deberás aplicar tus conocimientos!<br><br> Pulsa el botón “Ir a las preguntas” para resolver algunas actividades.</div>
+            </div></td>
+          <td style="width: 240px;"><img src="images/diap19.png" height="300"></td>
+      </table>
+    </div>
+  </div>
+  <div class="item_c">
+    <div class="boton_siguiente">
+      <div id="txt_btnsig2">IR A LAS PREGUNTAS </div>
+    </div>
+  </div>
+</div>
+<div id="pop0" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap4b.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  El Banco Popular, por ser filial del Grupo Aval, tiene la obligación de certificar anualmente la efectividad del Sistema de Control Interno sobre el Reporte Financiero de acuerdo con los lineamientos corporativos. </div>
+<div id="pop1" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap7b.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  Diseñar e implementar los controles necesarios para mitigar los riesgos. </div>
+<div id="pop2" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap7c.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  Actuar como dueños primarios de su respectivo proceso/control para asegurar su adecuada documentación. </div>
+<div id="pop3" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap7d.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  Conocer y entender los riesgos y controles a su cargo. </div>
+<div id="pop4" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap7e.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  Suministrar la información relacionada con evidencia de los controles a su cargo a entes de vigilancia y control, internos y externos, de forma completa y oportuna. </div>
+<div id="pop5" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap7f.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  Estar informados de los resultados de las pruebas de diseño y de validación de los controles, y participar en el proceso de discusión de estos. </div>
+<div id="pop6" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap7g.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  Realizar el empalme adecuado, suficiente y oportuno en caso de retiro temporal o permanente de los colaboradores que ejecutan controles SOX. </div>
+<div id="pop7" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap8b.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  Apoyar a los Dueños de Proceso/Controles en la identificación y aseguramiento del diseño de controles. </div>
+<div id="pop8" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap8c.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  Hacer seguimiento a los resultados de las evaluaciones independientes de diseño. </div>
+<div id="pop9" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap8d.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  Apoyar el proceso de diseño de planes de remediación. </div>
+<div id="pop10" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap8e.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  Preparar el Tablero de Control de su Entidad para reporte a Grupo Aval y monitorear la gestión de sus Subordinadas a través de los tableros de éstas. </div>
+<div id="pop11" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap8f.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  Asegurar integridad y exactitud del RDC, incluyendo la cuantificación de impacto y probabilidad de ocurrencia, y apoyar en la identificación de controles compensatorios. </div>
+<div id="pop12" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap9b.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  Realizar la validación independiente de la efectividad de los controles de acuerdo con el plan de trabajo aprobado por el Comité de Auditoría.</div>
+<div id="pop13" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap9c.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  Discutir e informar a los dueños de procesos la conclusión de sus validaciones.</div>
+<div id="pop14" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap9d.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  Realizar y documentar la evaluación independiente del diseño de los controles, de acuerdo con su juicio y su plan de trabajo aprobado por el Comité de Auditoría.</div>
+<div id="pop15" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap9e.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  Comunicar los resultados de sus evaluaciones independientes a las instancias asignadas en el Banco. </div>
+<div id="pop16" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap11b.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  Recuerda que los Dueños de Proceso son los responsables de ejecutar de forma uniforme y permanente los controles SOX a su cargo, así como de dejar la documentación suficiente que evidencia la ejecución de estos. </div>
+<div id="pop17" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap15b.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  No se ejecutó tal cual como está diseñado. </div>
+<div id="pop18" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap15c.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  En los controles automáticos, no se realizó la parametrización de forma correcta. </div>
+<div id="pop19" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap15d.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  Se ejecutó en una periodicidad errada. </div>
+<div id="pop20" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap15e.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  No se dejaron los soportes que demuestran la ejecución del control. </div>
+<div id="pop21" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap16b.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  El error contable generado por la deficiencia SOX fue <span class="negrilla">inferior al 1 % de la UAI</span> de los Estados Financieros Consolidados de Grupo Aval. </div>
+<div id="pop22" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap16c.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  El error contable generado por la deficiencia SOX fue <span class="negrilla">superior al 1 % e inferior al 4,4 % de la UAI</span> de los Estados Financieros Consolidados de Grupo Aval. </div>
+<div id="pop23" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap16d.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  El error contable generado por la deficiencia SOX fue <span class="negrilla">superior al 4,4 % de la UAI</span> de los Estados Financieros Consolidados de Grupo Aval. </div>
+<div id="pop24" class="pop"> </div>
+<div id="pop25" class="pop"> </div>
+<div id="pop26" class="pop"> </div>
+<div id="pop27" class="pop"> </div>
+<div id="pop28" class="pop"> </div>
+<div id="pop29" class="pop"> </div>
+</body>
+</html>
